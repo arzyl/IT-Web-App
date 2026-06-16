@@ -28,4 +28,4 @@ export default async function JobQueuePage() {
       <DataTable columns={columns} data={data} />
     </div>
   );
-} 
+}
