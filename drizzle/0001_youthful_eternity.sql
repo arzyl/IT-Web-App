@@ -1,0 +1,1 @@
+ALTER TABLE "users" ADD COLUMN "activity" varchar NOT NULL;

@@ -12,7 +12,7 @@ export default function RootLayout({
     <html
       lang="en"
     >
-      <body className="min-h-full flex flex-col pl-2">
+      <body className="min-h-full flex flex-col">
       <SidebarProvider>
       <AppSidebar />
       <main>
