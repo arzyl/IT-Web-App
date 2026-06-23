@@ -4,12 +4,13 @@ import { eq } from 'drizzle-orm';
 import { userTable } from './db/schema';
   
 const db = drizzle(process.env.DATABASE_URL!);
+const formData: FormData = new FormData();
 
 async function main() {
   const user: typeof userTable.$inferInsert = {
-    assignee: 'Luke',
-    priority: 'High',
-    activity: 'Checking of Internet in MIITD',
+    assignee: formData.get('assignee') as string,
+    priority: formData.get('priority') as string,
+    activity: formData.get('activity') as string,
   };
 
   await db.insert(userTable).values(user);

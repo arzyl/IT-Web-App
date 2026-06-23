@@ -2,62 +2,70 @@
 
 import { Table, TableBody, TableHeader, TableRow, TableHead, TableCell } from "@/components/ui/table";
 import { ColumnDef, useReactTable, getCoreRowModel, flexRender } from "@tanstack/react-table";
+import { useState } from "react";
+import  AddNew from "./add-new";
 
-interface DataTableProps<TData,TValue> {
+
+interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[],
     data: TData[]
 }
 
-export function DataTable<TData,TValue>({
-    columns,data,
-}: DataTableProps<TData,TValue>) {
+
+export function DataTable<TData, TValue>({
+    columns, data,
+}: DataTableProps<TData, TValue>) {
     const table = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
     })
-  return (
-    <div>
-      <Table>
-        <TableHeader>
-            {table.getHeaderGroups().map(headerGroup => (
-                <TableRow key={headerGroup.id}>
-                    {headerGroup.headers.map(header => (
-                        <TableHead key={header.id}>
-                            {header.isPlaceholder
-                                ? null
-                                : flexRender(
-                                    header.column.columnDef.header,
-                                    header.getContext()
-                                )}
-                        </TableHead>
+
+    const [open, setOpen] = useState(false);
+
+    return (
+        <div>
+            <AddNew />
+            <Table>
+                <TableHeader>
+                    {table.getHeaderGroups().map(headerGroup => (
+                        <TableRow key={headerGroup.id}>
+                            {headerGroup.headers.map(header => (
+                                <TableHead key={header.id}>
+                                    {header.isPlaceholder
+                                        ? null
+                                        : flexRender(
+                                            header.column.columnDef.header,
+                                            header.getContext()
+                                        )}
+                                </TableHead>
+                            ))}
+                        </TableRow>
                     ))}
-                </TableRow>
-            ))}
-        </TableHeader>
-        <TableBody>
-            {table.getRowModel().rows.length ? (
-                table.getRowModel().rows.map(row => (
-                    <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
-                        {row.getVisibleCells().map(cell => (
-                            <TableCell key={cell.id}>
-                                {flexRender(
-                                    cell.column.columnDef.cell,
-                                    cell.getContext()
-                                )}
+                </TableHeader>
+                <TableBody>
+                    {table.getRowModel().rows.length ? (
+                        table.getRowModel().rows.map(row => (
+                            <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+                                {row.getVisibleCells().map(cell => (
+                                    <TableCell key={cell.id}>
+                                        {flexRender(
+                                            cell.column.columnDef.cell,
+                                            cell.getContext()
+                                        )}
+                                    </TableCell>
+                                ))}
+                            </TableRow>
+                        ))
+                    ) : (
+                        <TableRow>
+                            <TableCell colSpan={columns.length} className="h-24 text-center">
+                                No results.
                             </TableCell>
-                        ))}
-                    </TableRow>
-                ))
-            ) : (
-                <TableRow>
-                    <TableCell colSpan={columns.length} className="h-24 text-center">
-                        No results.
-                    </TableCell>
-                </TableRow>
-            )}
-        </TableBody>
-      </Table>
-    </div>
-  );
+                        </TableRow>
+                    )}
+                </TableBody>
+            </Table>
+        </div>
+    );
 }

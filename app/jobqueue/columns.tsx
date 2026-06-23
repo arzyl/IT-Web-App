@@ -10,6 +10,21 @@ import { Field, FieldGroup, } from "@/components/ui/field"
 import { Label } from "@radix-ui/react-label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+import { Alert } from "@/components/ui/alert";
+import { CheckCheckIcon, CheckCircle, CheckCircle2Icon, CheckCircleIcon } from "lucide-react";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+
+import { Edit } from "./edit";
 
 export type JobQueue = {
     id: number;
@@ -34,11 +49,7 @@ export const columns: ColumnDef<JobQueue>[] = [
         header: "Job Name",
     },
     {
-        accessorKey: "status",
-        header: "Status",
-    },
-    {
-        accessorKey: "createdAt",
+        accessorKey: "createAt",
         header: "Created At",
     },
     {
@@ -73,51 +84,7 @@ export const columns: ColumnDef<JobQueue>[] = [
 
                             {/* Edit Dropdown Function */}
                             <Dialog open={open} onOpenChange={setOpen}>
-                                <form action="">
-                                    <DialogContent className="sm:max-w-sm">
-                                        <DialogHeader>
-                                            <DialogTitle>Edit Job Queue</DialogTitle>
-                                            <DialogDescription>May karapatan kang baguhin ang pagkakamali mo</DialogDescription>
-                                        </DialogHeader>
-                                        <FieldGroup>
-                                            <Field>
-                                                <Label htmlFor="name-1">Assignee</Label>
-                                                <Input id="assignee" name="assignee" defaultValue="" />
-                                            </Field>
-                                            <Field>
-                                                <Label htmlFor="name-1">Job Name</Label>
-                                                <Input id="jobName" name="jobName" defaultValue="" />
-                                            </Field>
-                                            <Field>
-                                                <Label htmlFor="name-1">Priority</Label>
-                                                <Select onValueChange={setPriority}>
-                                                    <SelectTrigger>
-                                                        <SelectValue placeholder="Select priority"></SelectValue>
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                            <SelectItem value="low" className="bg-yellow-300">Low</SelectItem>
-                                                            <SelectItem value="medium" className="bg-orange-300">Medium</SelectItem>
-                                                            <SelectItem value="high" className="bg-red-500">High</SelectItem>
-                                                    </SelectContent>
-                                                </Select>
-                                            </Field>
-                                            <Field>
-                                                <Label htmlFor="name-1">Status</Label>
-                                                <Select>
-                                                    <SelectTrigger>
-                                                        <SelectValue placeholder="Status"></SelectValue>
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        <SelectItem value="pending" className="red">Pending</SelectItem>
-                                                        <SelectItem value="Ongoing">Ongoing</SelectItem>
-                                                        <SelectItem value="Done">Done</SelectItem>
-                                                    </SelectContent>
-                                                </Select>
-                                            </Field>
-                                            <Button>Save</Button>
-                                        </FieldGroup>
-                                    </DialogContent>
-                                </form>
+                            <Edit />
                             </Dialog>
                             <DropdownMenuItem>
                                 Cancel
@@ -127,8 +94,36 @@ export const columns: ColumnDef<JobQueue>[] = [
                 </DropdownMenu>
 
             )
+        },
+    },
+    {
+        id: "done",
+        cell: ({ row }) => {
+
+            const [open, setOpen] = useState(false);
+
+            return (
+                <AlertDialog>
+                    <AlertDialogTrigger asChild className="hover:scale-105">
+                        <CheckCircle2Icon/>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                                This action cannot be undone. This will permanently delete your
+                                account from our servers.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction>Continue</AlertDialogAction>
+                            
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
+            );
         }
     }
-
 
 ];

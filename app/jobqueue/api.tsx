@@ -10,8 +10,6 @@ export default function JobQueueData() {
         fetch("/api/users")
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
-                console.log(data.length)
                 setData(data)
             });
     }, []);
