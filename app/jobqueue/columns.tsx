@@ -23,8 +23,8 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-
 import { Edit } from "./edit";
+import { toast } from "sonner";
 
 export type JobQueue = {
     id: number;
@@ -104,20 +104,19 @@ export const columns: ColumnDef<JobQueue>[] = [
 
             return (
                 <AlertDialog>
-                    <AlertDialogTrigger asChild className="hover:scale-105">
+                    <AlertDialogTrigger asChild className="hover:scale-105" onClick={() => setOpen(true)}>
                         <CheckCircle2Icon/>
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                         <AlertDialogHeader>
                             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                             <AlertDialogDescription>
-                                This action cannot be undone. This will permanently delete your
-                                account from our servers.
+                                This action cannot be undone. This will remove the task from current view.
                             </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction>Continue</AlertDialogAction>
+                            <AlertDialogAction >Continue</AlertDialogAction>
                             
                         </AlertDialogFooter>
                     </AlertDialogContent>

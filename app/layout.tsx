@@ -13,13 +13,13 @@ export default function RootLayout({
       lang="en"
     >
       <body className="min-h-full flex flex-col">
-      <SidebarProvider>
-      <AppSidebar />
-      <main>
-        <SidebarTrigger />
-        {children}
-      </main>
-    </SidebarProvider>
+        <SidebarProvider>
+          <AppSidebar />
+          <main>
+            <SidebarTrigger />
+            {children}
+          </main>
+        </SidebarProvider>
 
 
       </body>

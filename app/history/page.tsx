@@ -1,10 +1,9 @@
-export default function History() {
-  return (
-    <div>
-      <h1>History</h1>
-      <p>Welcome to the history page!</p>
-    </div>
-  );
+import { History } from "./history"
 
-  
+export default async function JobQueuePage() {
+    return (
+        <div className="container mx-auto py-5">
+            <History />
+        </div>
+    )
 }

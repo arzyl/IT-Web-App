@@ -29,14 +29,14 @@ export default function AddNew() {
     const [open, setOpen] = useState(false);
     const [priority, setPrio] = useState("");
     const router = useRouter();
-    const formData = new FormData();
+    const [status, setStatus] = useState("");
     async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
         e.preventDefault();
         const body = {
             ...Object.fromEntries(new FormData(e.currentTarget)), //use this to get all fields automatically
             // job: formData.get("job"),
             // assignee: formData.get("assignee"),
-            priority,
+            priority,status
             // status: formData.get("status"),
         };
 
@@ -93,6 +93,19 @@ export default function AddNew() {
                             </Select>
                         </Field>
                     </FieldGroup>
+                    <Field>
+                        <Label htmlFor="status">Status</Label>
+                        <Select value={status} onValueChange={setStatus}>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Status"></SelectValue>
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="pending" className="red">Pending</SelectItem>
+                                <SelectItem value="Ongoing">Ongoing</SelectItem>
+                                <SelectItem value="Done">Done</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </Field>
                     <DialogFooter>
                         <DialogClose asChild>
                             <Button type="button" variant="outline">Cancel</Button>
