@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, } from "@/components/ui/dropdown-menu"
 import Link from "next/link";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog"
-import { Field, FieldGroup, } from "@/components/ui/field"
 import { Label } from "@radix-ui/react-label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
@@ -25,6 +24,8 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Edit } from "./edit";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import MarkAsComplete from "./markascomplete";
 
 export type JobQueue = {
     id: number;
@@ -84,7 +85,7 @@ export const columns: ColumnDef<JobQueue>[] = [
 
                             {/* Edit Dropdown Function */}
                             <Dialog open={open} onOpenChange={setOpen}>
-                            <Edit />
+                                <Edit />
                             </Dialog>
                             <DropdownMenuItem>
                                 Cancel
@@ -99,30 +100,11 @@ export const columns: ColumnDef<JobQueue>[] = [
     {
         id: "done",
         cell: ({ row }) => {
+                            const [open, setOpen] = useState(false);
 
-            const [open, setOpen] = useState(false);
-
-            return (
-                <AlertDialog>
-                    <AlertDialogTrigger asChild className="hover:scale-105" onClick={() => setOpen(true)}>
-                        <CheckCircle2Icon/>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                        <AlertDialogHeader>
-                            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                            <AlertDialogDescription>
-                                This action cannot be undone. This will remove the task from current view.
-                            </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction >Continue</AlertDialogAction>
-                            
-                        </AlertDialogFooter>
-                    </AlertDialogContent>
-                </AlertDialog>
-            );
-        }
-    }
-
-];
+                return (
+                    <MarkAsComplete queue={row.original} />
+                );
+                
+            }
+        }]

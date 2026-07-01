@@ -11,6 +11,7 @@ async function main() {
     assignee: formData.get('assignee') as string,
     priority: formData.get('priority') as string,
     activity: formData.get('activity') as string,
+    status: formData.get('status') as string,
   };
 
   await db.insert(userTable).values(user);
